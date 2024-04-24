@@ -239,3 +239,5 @@ class Phy{
         return degrees;
     }
 }
+
+export default Phy;
