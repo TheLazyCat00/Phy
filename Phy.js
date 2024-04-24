@@ -1,4 +1,4 @@
-class Phy{
+export class Phy{
     constructor(Matter, myDocument) {
         this.physicsRules;
         this.notStaticElements = [];
@@ -239,5 +239,3 @@ class Phy{
         return degrees;
     }
 }
-
-export default Phy;
