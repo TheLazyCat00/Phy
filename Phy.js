@@ -1,4 +1,4 @@
-export class Phy{
+class Phy{
     constructor(Matter, myDocument) {
         this.physicsRules;
         this.notStaticElements = [];
