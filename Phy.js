@@ -1,4 +1,8 @@
-export class Phy{
+function setupPhy(e, t) {
+    'object' == typeof exports && 'object' == typeof module ? module.exports = t() : 'function' == typeof define && define.amd ? define('Phy', [], t) : 'object' == typeof exports ? exports.Phy = t() : e.Phy = t();
+}
+
+class Phy {
     constructor(Matter, myDocument) {
         this.physicsRules;
         this.notStaticElements = [];
@@ -10,12 +14,12 @@ export class Phy{
 
         this.engine = this.Engine.create();
         this.runner = this.Runner.create();
-		
-		this.document = myDocument;
+        
+        this.document = myDocument;
 
         this.render = this.Render.create({
             engine: this.engine,
-			//element: this.document.body
+            //element: this.document.body
         });
 
 
@@ -239,3 +243,6 @@ export class Phy{
         return degrees;
     }
 }
+
+// Exporting the class using the provided setup function
+setupPhy(this, () => Phy);
