@@ -1,5 +1,5 @@
 export class Phy{
-    constructor(Matter, myDocument) {
+    constructor(Matter, myDocument, hasRenderer) {
         this.physicsRules;
         this.notStaticElements = [];
         this.Engine = Matter.Engine;
@@ -14,11 +14,24 @@ export class Phy{
         this.runner = this.Runner.create();
 		
 		this.document = myDocument;
+        
+        let renderer;
 
-        this.render = this.Render.create({
-            engine: this.engine,
-			//element: this.document.body
-        });
+        if(hasRenderer){
+            renderer =
+            {
+                engine: this.engine,
+			    element: this.document.body   
+            }
+        }
+        else{
+            renderer =
+            {
+                engine: this.engine 
+            }
+        }
+
+        this.render = this.Render.create(renderer);
 
 
         this.elements = Array.from(this.document.querySelectorAll('[data-physics]'));
@@ -47,7 +60,7 @@ export class Phy{
         }
 
         Matter.Events.on(this.engine, 'afterUpdate', () => {
-            this.notStaticElements.forEach(element => {
+            this.elements.forEach(element => {
                 if (this.data[element.id].isSvg) {
                     let position = this.getPosition(this.data[element.id].object);
                     element.style.left = position.x + this.data[element.id].offset.x + 'px';
@@ -62,9 +75,9 @@ export class Phy{
         });
     }
 
-    static create(Matter, document){
+    static create(Matter, document, hasRenderer){
         return new Promise((resolve) => {
-            const instance = new Phy(Matter, document);
+            const instance = new Phy(Matter, document, hasRenderer);
             let intervalId = setInterval(() => {
                 if(instance.ok){
                     resolve(instance);
