@@ -62,6 +62,18 @@ export class Phy{
         });
     }
 
+    static create(Matter, document){
+        return new Promise((resolve) => {
+            const instance = new Phy(Matter, document);
+            let intervalId = setInterval(() => {
+                if(instance.ok){
+                    resolve(instance);
+                    clearInterval(intervalId);
+                }    
+            }, 10)
+        });
+    }
+
     updateShape(id) {
         this.data[id] = this.data[id] || {};
         let element = this.document.getElementById(id);
@@ -121,6 +133,8 @@ export class Phy{
                 this.updateShape(element.id);
             });
         });
+
+        this.ok = true;
     }
 
     getSize(size) {
